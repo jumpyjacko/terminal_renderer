@@ -103,3 +103,26 @@ impl Point2D {
         return (side_1 < 0) && (side_2 < 0) && (side_3 < 0);
     }
 }
+
+// TODO: Make a "Face" struct and make this an 'impl' of it
+pub fn calculate_face_normal(p0: Point3D, p1: Point3D, p2: Point3D) -> Point3D {
+    let u = Point3D {
+        x: p1.x - p0.x,
+        y: p1.y - p0.y,
+        z: p1.z - p0.z,
+    };
+    let v = Point3D {
+        x: p2.x - p0.x,
+        y: p2.y - p0.y,
+        z: p2.z - p0.z,
+    };
+    let nx = u.y * v.z - u.z * v.y;
+    let ny = u.z * v.x - u.x * v.z;
+    let nz = u.x * v.y - u.y * v.x;
+
+    Point3D {
+        x: nx,
+        y: ny,
+        z: nz,
+    }
+}
