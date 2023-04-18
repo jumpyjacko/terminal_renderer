@@ -1,6 +1,3 @@
-use ndarray::arr1;
-use ndarray::arr2;
-
 #[derive(Clone, Copy)]
 pub struct Point3D {
     pub x: f32,
@@ -28,10 +25,13 @@ impl Point3D {
 
     // All three of these rotation functions use the simplified per-axis rotation matrix
     pub fn rotate_x(&self, theta: &f32) -> Point3D {
-        let yz = arr1(&[self.y, self.z]);
-        let matrix = arr2(&[[theta.cos(), -theta.sin()], [theta.sin(), theta.cos()]]);
+        let yz = &[self.y, self.z];
+        let matrix = &[[theta.cos(), -theta.sin()], [theta.sin(), theta.cos()]];
 
-        let rotated_yz = matrix.dot(&yz);
+        let rotated_yz = &[
+            matrix[0][0] * yz[0] + matrix[0][1] * yz[1],
+            matrix[1][0] * yz[0] + matrix[1][1] * yz[1],
+        ];
 
         Point3D {
             x: self.x,
@@ -41,10 +41,13 @@ impl Point3D {
     }
 
     pub fn rotate_y(&self, theta: &f32) -> Point3D {
-        let xz = arr1(&[self.x, self.z]);
-        let matrix = arr2(&[[theta.cos(), -theta.sin()], [theta.sin(), theta.cos()]]);
+        let xz = &[self.x, self.z];
+        let matrix = &[[theta.cos(), -theta.sin()], [theta.sin(), theta.cos()]];
 
-        let rotated_xz = matrix.dot(&xz);
+        let rotated_xz = &[
+            matrix[0][0] * xz[0] + matrix[0][1] * xz[1],
+            matrix[1][0] * xz[0] + matrix[1][1] * xz[1],
+        ];
 
         Point3D {
             x: rotated_xz[0],
@@ -54,10 +57,13 @@ impl Point3D {
     }
 
     pub fn rotate_z(&self, theta: &f32) -> Point3D {
-        let xy = arr1(&[self.x, self.y]);
-        let matrix = arr2(&[[theta.cos(), -theta.sin()], [theta.sin(), theta.cos()]]);
+        let xy = &[self.x, self.y];
+        let matrix = &[[theta.cos(), -theta.sin()], [theta.sin(), theta.cos()]];
 
-        let rotated_xy = matrix.dot(&xy);
+        let rotated_xy = &[
+            matrix[0][0] * xy[0] + matrix[0][1] * xy[1],
+            matrix[1][0] * xy[0] + matrix[1][1] * xy[1],
+        ];
 
         Point3D {
             x: rotated_xy[0],
