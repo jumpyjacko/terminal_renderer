@@ -2,7 +2,7 @@ use crate::*;
 
 #[derive(Clone, Copy)]
 pub struct Shape<'a> {
-    pub verts: &'a [Point3D],
+    pub verts: &'a [Float3],
     pub faces: &'a [Face],
 }
 
@@ -15,29 +15,29 @@ pub struct Face {
 
 pub const PLANE: Shape = Shape {
     verts: &[
-        Point3D {
+        Float3 {
             x: 60.0,
             y: 60.0,
             z: 0.0,
         },
-        Point3D {
+        Float3 {
             x: 60.0,
             y: -60.0,
             z: 0.0,
         },
-        Point3D {
+        Float3 {
             x: -60.0,
             y: -60.0,
             z: 0.0,
         },
-        Point3D {
+        Float3 {
             x: -60.0,
             y: 60.0,
             z: 0.0,
         },
     ],
     // Front Facing Plane
-    faces: &[Face { a: 0, b: 1, c: 2 }, Tri { a: 0, b: 2, c: 3 }],
+    faces: &[Face { a: 0, b: 1, c: 2 }, Face { a: 0, b: 2, c: 3 }],
     // Back Facing Plane
-    // faces: &[Face { a: 0, b: 2, c: 1 }, Tri { a: 0, b: 3, c: 2 }],
+    // faces: &[Face { a: 0, b: 2, c: 1 }, Face { a: 0, b: 3, c: 2 }],
 };
