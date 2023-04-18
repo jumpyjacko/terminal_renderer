@@ -41,7 +41,6 @@ fn main() {
 
         transformed_vert_table.iter().for_each(|v| {
             let p_point = v.project(&FOCAL_LENGTH);
-            // println!("{}, {}", p_point.x, p_point.y);
             projected_vert_table.push(p_point);
         });
 
@@ -60,12 +59,9 @@ fn main() {
         // Face Drawing
         for y in 0..SIZE {
             for x in 0..SIZE {
-                // println!("p: {}, {}", x, y);
                 let p: Int2 = Int2 {
                     x: x as i32 - OFFSET as i32,
                     y: y as i32 - OFFSET as i32,
-                    // x: x as i32,
-                    // y: y as i32,
                 };
 
                 for face in &face_table {

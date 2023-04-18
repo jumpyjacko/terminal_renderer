@@ -36,8 +36,5 @@ pub const PLANE: Shape = Shape {
             z: 0.0,
         },
     ],
-    // Front Facing Plane
     faces: &[Face { a: 0, b: 1, c: 2 }, Face { a: 0, b: 2, c: 3 }],
-    // Back Facing Plane
-    // faces: &[Face { a: 0, b: 2, c: 1 }, Face { a: 0, b: 3, c: 2 }],
 };
