@@ -14,8 +14,8 @@ const OFFSET: usize = SIZE / 2;
 fn main() {
     print!("\x1b[2J\x1b[H");
 
-    let vert_table: Vec<Float3> = shapes::PLANE.verts.to_vec();
-    let face_table: Vec<Face> = shapes::PLANE.faces.to_vec();
+    let vert_table: Vec<Float3> = shapes::CUBE.verts.to_vec();
+    let face_table: Vec<Face> = shapes::CUBE.faces.to_vec();
 
     let light_vector: Float3 = Float3 {
         x: -1.0,
@@ -36,7 +36,7 @@ fn main() {
         let mut face_shading_lut: Vec<usize> = vec![];
 
         vert_table.iter().for_each(|v| {
-            let transformed_point = v.rotate_y(&theta);
+            let transformed_point = v.rotate_y(&theta).rotate_z(&theta);
             transformed_vert_table.push(transformed_point);
         });
 
