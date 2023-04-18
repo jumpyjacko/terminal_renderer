@@ -5,7 +5,7 @@ use std::{thread, time::Duration, time::Instant};
 mod math;
 mod shapes;
 
-const TILES: [&str; 6] = [" ", ".", ",", "-", "=", "#"];
+const TILES: [&str; 6] = [" ", ".", "*", "+", "x", "@"];
 const SIZE: usize = 30;
 const FOCAL_LENGTH: i32 = 30;
 
@@ -33,6 +33,7 @@ fn main() {
 
         let mut transformed_vert_table: Vec<Float3> = vec![];
         let mut projected_vert_table: Vec<Int2> = vec![];
+        let mut face_shading_lut: Vec<usize> = vec![];
 
         vert_table.iter().for_each(|v| {
             let transformed_point = v.rotate_y(&theta);
@@ -52,8 +53,10 @@ fn main() {
                 transformed_vert_table[face.c],
             );
 
-            let dot_product =
+            let dot_product: f32 =
                 normal.x * light_vector.x + normal.y * light_vector.y + normal.z * light_vector.z;
+
+            face_shading_lut.push((((dot_product + 1.0) / 2.0) * 6.0) as usize);
         }
 
         // Face Drawing
@@ -64,7 +67,7 @@ fn main() {
                     y: y as i32 - OFFSET as i32,
                 };
 
-                for face in &face_table {
+                for (i, face) in face_table.iter().enumerate() {
                     let result: bool = p.in_tri(
                         projected_vert_table[face.a],
                         projected_vert_table[face.b],
@@ -72,7 +75,7 @@ fn main() {
                     );
 
                     if result {
-                        canvas[y][x] = 1;
+                        canvas[y][x] = face_shading_lut[i];
                     }
                 }
             }
@@ -85,7 +88,7 @@ fn main() {
             println!();
         }
 
-        // theta += 0.05;
+        theta += 0.05;
 
         thread::sleep(Duration::from_millis(30))
     }

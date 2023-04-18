@@ -112,10 +112,10 @@ pub fn calculate_face_normal(p0: Float3, p1: Float3, p2: Float3) -> Float3 {
         z: u.x * v.y - u.y * v.x,
     };
 
-    println!(
-        "U: {}, {}, {} | V: {}, {}, {} | N: {}, {}, {}",
-        u.x, u.y, u.z, v.x, v.y, v.z, n.x, n.y, n.z
-    );
+    // println!(
+    //     "U: {}, {}, {} | V: {}, {}, {} | N: {}, {}, {}",
+    //     u.x, u.y, u.z, v.x, v.y, v.z, n.x, n.y, n.z
+    // );
 
     n.normalise()
 }
