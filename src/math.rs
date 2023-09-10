@@ -1,11 +1,11 @@
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 pub struct Float3 {
     pub x: f32,
     pub y: f32,
     pub z: f32,
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 pub struct Int2 {
     pub x: i32,
     pub y: i32,

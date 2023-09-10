@@ -3,6 +3,7 @@ use crate::shapes::Face;
 use std::{thread, time::Duration, time::Instant};
 
 mod math;
+mod parser;
 mod shapes;
 
 const TILES: [&str; 6] = [" ", ".", "*", "+", "x", "@"];

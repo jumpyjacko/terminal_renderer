@@ -1,19 +1,20 @@
-use crate::*;
+use crate::Float3;
 
-#[derive(Clone, Copy)]
-pub struct Shape<'a> {
+#[derive(Clone, Copy, Debug)]
+pub struct Object<'a> {
     pub verts: &'a [Float3],
     pub faces: &'a [Face],
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 pub struct Face {
     pub a: usize,
     pub b: usize,
     pub c: usize,
 }
 
-pub const PLANE: Shape = Shape {
+#[allow(dead_code)]
+pub const PLANE: Object = Object {
     verts: &[
         Float3 {
             x: 60.0,
@@ -39,7 +40,8 @@ pub const PLANE: Shape = Shape {
     faces: &[Face { a: 0, b: 1, c: 2 }, Face { a: 0, b: 2, c: 3 }],
 };
 
-pub const CUBE: Shape = Shape {
+#[allow(dead_code)]
+pub const CUBE: Object = Object {
     verts: &[
         // Top face (0-3)
         Float3 {
