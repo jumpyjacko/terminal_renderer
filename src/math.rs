@@ -100,11 +100,22 @@ impl Float3 {
 
 impl Int2 {
     pub fn in_tri(&self, p0: Int2, p1: Int2, p2: Int2) -> bool {
-        let side_1 = (self.x - p1.x) * (p0.y - p1.y) - (p0.x - p1.x) * (self.y - p1.y);
-        let side_2 = (self.x - p2.x) * (p1.y - p2.y) - (p1.x - p2.x) * (self.y - p2.y);
-        let side_3 = (self.x - p0.x) * (p2.y - p0.y) - (p2.x - p0.x) * (self.y - p0.y);
+        // let side_1 = (self.x - p1.x) * (p0.y - p1.y) - (p0.x - p1.x) * (self.y - p1.y);
+        // let side_2 = (self.x - p2.x) * (p1.y - p2.y) - (p1.x - p2.x) * (self.y - p2.y);
+        // let side_3 = (self.x - p0.x) * (p2.y - p0.y) - (p2.x - p0.x) * (self.y - p0.y);
+        //
+        // return (side_1 < 0) && (side_2 < 0) && (side_3 < 0);
 
-        return (side_1 < 0) && (side_2 < 0) && (side_3 < 0);
+        let s = p0.y * p1.x - p0.x * p1.y + (p1.y - p0.y) * self.x + (p0.x - p1.x) * self.y;
+        let t = p0.x * p2.y - p0.y * p2.x + (p0.y - p2.y) * self.x + (p2.x - p0.x) * self.y;
+
+        if s <= 0 || t <= 0 {
+            return false;
+        }
+
+        let a = -p2.y * p1.x + p0.y * (-p2.x + p1.x) + p0.x * (p2.y - p1.y) + p2.x * p1.y;
+
+        (s + t) < a
     }
 }
 
