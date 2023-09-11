@@ -1,11 +1,13 @@
-#[derive(Clone, Copy, Debug)]
+use crate::parser::ParseError;
+
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Float3 {
     pub x: f32,
     pub y: f32,
     pub z: f32,
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Int2 {
     pub x: i32,
     pub y: i32,
@@ -33,6 +35,7 @@ impl Float3 {
     }
 
     // All three of these rotation functions use the simplified per-axis rotation matrix
+    #[allow(dead_code)]
     pub fn rotate_x(&self, theta: &f32) -> Float3 {
         let yz = &[self.y, self.z];
         let matrix = &[[theta.cos(), -theta.sin()], [theta.sin(), theta.cos()]];
@@ -49,6 +52,7 @@ impl Float3 {
         }
     }
 
+    #[allow(dead_code)]
     pub fn rotate_y(&self, theta: &f32) -> Float3 {
         let xz = &[self.x, self.z];
         let matrix = &[[theta.cos(), -theta.sin()], [theta.sin(), theta.cos()]];
@@ -65,6 +69,7 @@ impl Float3 {
         }
     }
 
+    #[allow(dead_code)]
     pub fn rotate_z(&self, theta: &f32) -> Float3 {
         let xy = &[self.x, self.y];
         let matrix = &[[theta.cos(), -theta.sin()], [theta.sin(), theta.cos()]];
@@ -79,6 +84,17 @@ impl Float3 {
             y: rotated_xy[1],
             z: self.z,
         }
+    }
+
+    pub fn from_vec(vec_in: Vec<f32>) -> Result<Float3, ParseError> {
+        if vec_in.is_empty() {
+            return Err(ParseError::EmptyVector);
+        }
+        Ok(Float3 {
+            x: vec_in[0],
+            y: vec_in[1],
+            z: vec_in[2],
+        })
     }
 }
 

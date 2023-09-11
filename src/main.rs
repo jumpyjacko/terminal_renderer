@@ -1,6 +1,7 @@
 use crate::math::{calculate_face_normal, Float3, Int2};
+use crate::parser::from_obj;
 use crate::shapes::Face;
-use std::{thread, time::Duration, time::Instant};
+use std::{thread, time::Duration};
 
 mod math;
 mod parser;
@@ -15,8 +16,14 @@ const OFFSET: usize = SIZE / 2;
 fn main() {
     print!("\x1b[2J\x1b[H");
 
-    let vert_table: Vec<Float3> = shapes::CUBE.verts.to_vec();
-    let face_table: Vec<Face> = shapes::CUBE.faces.to_vec();
+    // let vert_table: Vec<Float3> = shapes::CUBE.verts.to_vec();
+    // let face_table: Vec<Face> = shapes::CUBE.faces.to_vec();
+    let loaded_object = match from_obj("./tests/box.obj") {
+        Ok(o) => o,
+        Err(e) => panic!("Failed with error: {:?}", e),
+    };
+    let vert_table: Vec<Float3> = loaded_object.verts;
+    let face_table: Vec<Face> = loaded_object.faces;
 
     let light_vector: Float3 = Float3 {
         x: -1.0,
@@ -27,6 +34,7 @@ fn main() {
 
     let mut theta: f32 = 0.0;
 
+    // TODO: Make all calculations depend on deltatime
     loop {
         print!("\x1b[H");
 
