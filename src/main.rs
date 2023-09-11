@@ -8,8 +8,8 @@ mod parser;
 mod shapes;
 
 const TILES: [&str; 6] = [" ", ".", "*", "+", "x", "@"];
-const SIZE: usize = 30;
-const FOCAL_LENGTH: i32 = 30;
+const SIZE: usize = 50;
+const FOCAL_LENGTH: i32 = 50;
 
 const OFFSET: usize = SIZE / 2;
 
@@ -18,7 +18,7 @@ fn main() {
 
     // let vert_table: Vec<Float3> = shapes::CUBE.verts.to_vec();
     // let face_table: Vec<Face> = shapes::CUBE.faces.to_vec();
-    let loaded_object = match from_obj("./tests/box.obj", 100.0) {
+    let loaded_object = match from_obj("./suzanne.obj", 100.0) {
         Ok(o) => o,
         Err(e) => panic!("Failed with error: {:?}", e),
     };
