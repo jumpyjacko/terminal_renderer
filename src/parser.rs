@@ -43,7 +43,7 @@ pub fn from_obj(path: &str, scale: f32) -> Result<Object, ParseError> {
                     Ok(f) => f,
                     Err(e) => panic!("Failed with error: {:?}", e),
                 });
-                faces.push(match Face::from_vec(vec![words[1], words[2], words[3]]) {
+                faces.push(match Face::from_vec(vec![words[0], words[2], words[3]]) {
                     Ok(f) => f,
                     Err(e) => panic!("Failed with error: {:?}", e),
                 });
@@ -88,7 +88,7 @@ mod tests {
 
     #[test]
     fn test_read_obj_file() {
-        let result = match from_obj("./tests/box.obj") {
+        let result = match from_obj("./tests/box.obj", 1.0) {
             Ok(r) => r,
             Err(e) => panic!("u fucked up bro: {:?}", e),
         };
@@ -139,17 +139,17 @@ mod tests {
                 ],
                 faces: vec![
                     Face { a: 3, b: 2, c: 1 },
-                    Face { a: 2, b: 1, c: 0 },
+                    Face { a: 3, b: 1, c: 0 },
                     Face { a: 1, b: 5, c: 4 },
-                    Face { a: 5, b: 4, c: 0 },
-                    Face { a: 2, b: 6, c: 6 },
-                    Face { a: 6, b: 5, c: 1 },
+                    Face { a: 1, b: 4, c: 0 },
+                    Face { a: 2, b: 6, c: 5 },
+                    Face { a: 2, b: 5, c: 1 },
                     Face { a: 7, b: 6, c: 2 },
-                    Face { a: 6, b: 2, c: 3 },
+                    Face { a: 7, b: 2, c: 3 },
                     Face { a: 4, b: 7, c: 3 },
-                    Face { a: 7, b: 3, c: 0 },
+                    Face { a: 4, b: 3, c: 0 },
                     Face { a: 5, b: 6, c: 7 },
-                    Face { a: 6, b: 7, c: 4 },
+                    Face { a: 5, b: 7, c: 4 },
                 ],
             }
         );
