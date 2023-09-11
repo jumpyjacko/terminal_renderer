@@ -7,7 +7,7 @@ mod math;
 mod parser;
 mod shapes;
 
-const TILES: [&str; 6] = [" ", ".", "*", "+", "x", "@"];
+const TILES: [&str; 10] = [" ", ".", ":", "-", "=", "+", "*", "#", "%", "@"];
 const SIZE: usize = 50;
 const FOCAL_LENGTH: i32 = 50;
 
@@ -66,7 +66,7 @@ fn main() {
             let dot_product: f32 =
                 normal.x * light_vector.x + normal.y * light_vector.y + normal.z * light_vector.z;
 
-            face_shading_lut.push((((dot_product + 1.0) / 2.0) * 6.0) as usize);
+            face_shading_lut.push((((dot_product + 1.0) / 2.0) * 10.0) as usize);
         }
 
         // Face Drawing
