@@ -18,7 +18,7 @@ fn main() {
 
     // let vert_table: Vec<Float3> = shapes::CUBE.verts.to_vec();
     // let face_table: Vec<Face> = shapes::CUBE.faces.to_vec();
-    let loaded_object = match from_obj("./tests/box.obj") {
+    let loaded_object = match from_obj("./tests/box.obj", 100.0) {
         Ok(o) => o,
         Err(e) => panic!("Failed with error: {:?}", e),
     };

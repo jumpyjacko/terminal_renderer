@@ -8,7 +8,7 @@ pub enum ParseError {
 }
 
 /// Creates an 'Object' type from a '.obj' file
-pub fn from_obj(path: &str) -> Result<Object, ParseError> {
+pub fn from_obj(path: &str, scale: f32) -> Result<Object, ParseError> {
     let file: String = read_file(path)?;
 
     let mut verts: Vec<Float3> = Vec::new();
@@ -25,7 +25,7 @@ pub fn from_obj(path: &str) -> Result<Object, ParseError> {
             words.remove(0);
             let words = words
                 .into_iter()
-                .map(|e| e.parse::<f32>().expect("Failed to parse vertice to float"))
+                .map(|e| e.parse::<f32>().expect("Failed to parse vertice to float") * scale)
                 .collect();
 
             verts.push(match Float3::from_vec(words) {
