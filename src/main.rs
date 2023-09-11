@@ -1,7 +1,7 @@
 use crate::math::{calculate_face_normal, Float3, Int2};
 use crate::parser::from_obj;
 use crate::shapes::Face;
-use std::{thread, time::Duration};
+use std::{thread, time::Duration, time::Instant};
 
 mod math;
 mod parser;
@@ -37,6 +37,7 @@ fn main() {
     // TODO: Make all calculations depend on deltatime
     loop {
         print!("\x1b[H");
+        let frame_timer = Instant::now();
 
         let mut canvas = [[0; SIZE]; SIZE];
 
@@ -99,6 +100,9 @@ fn main() {
 
         theta += 0.05;
 
-        thread::sleep(Duration::from_millis(30))
+        let frame_time = frame_timer.elapsed().as_millis();
+        println!("Calculation Duration: {} ms", frame_time);
+        println!("   Frames per Second: {}", 1000 / frame_time);
+        // thread::sleep(Duration::from_millis(10))
     }
 }
