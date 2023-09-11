@@ -38,6 +38,7 @@ pub fn from_obj(path: &str, scale: f32) -> Result<Object, ParseError> {
                 .into_iter()
                 .map(|e| e.parse::<usize>().expect("Failed to parse face to usize") - 1)
                 .collect();
+
             if words.len() == 4 {
                 faces.push(match Face::from_vec(vec![words[0], words[1], words[2]]) {
                     Ok(f) => f,
@@ -47,6 +48,7 @@ pub fn from_obj(path: &str, scale: f32) -> Result<Object, ParseError> {
                     Ok(f) => f,
                     Err(e) => panic!("Failed with error: {:?}", e),
                 });
+                // TODO: I didn't include another type of face definition
             } else {
                 faces.push(match Face::from_vec(vec![words[0], words[1], words[2]]) {
                     Ok(f) => f,
@@ -87,7 +89,7 @@ mod tests {
     }
 
     #[test]
-    fn test_read_obj_file() {
+    fn test_read_obj_file_quads() {
         let result = match from_obj("./tests/box.obj", 1.0) {
             Ok(r) => r,
             Err(e) => panic!("u fucked up bro: {:?}", e),
