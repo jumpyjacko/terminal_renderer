@@ -1,24 +1,32 @@
 use crate::math::{calculate_face_normal, Float3, Int2};
 use crate::parser::from_obj;
 use crate::shapes::Face;
-use std::{thread, time::Duration, time::Instant};
+use std::time::{Duration, Instant};
+use std::thread;
+use std::env;
 
 mod math;
 mod parser;
 mod shapes;
 
 const TILES: [&str; 10] = [" ", ".", ":", "-", "=", "+", "*", "#", "%", "@"];
-const SIZE: usize = 50;
-const FOCAL_LENGTH: i32 = 50;
+const SIZE: usize = 60;
+const FOCAL_LENGTH: i32 = 60;
 
 const OFFSET: usize = SIZE / 2;
 
 fn main() {
-    print!("\x1b[2J\x1b[H");
 
     // let vert_table: Vec<Float3> = shapes::CUBE.verts.to_vec();
     // let face_table: Vec<Face> = shapes::CUBE.faces.to_vec();
-    let loaded_object = match from_obj("./suzanne.obj", 100.0) {
+    let args: Vec<String> = env::args().collect();
+
+    let object_path = match args[1].len() < 2 {
+        true => panic!("No path to an .obj file provided"),
+        false => args[1].to_owned(),
+    };
+    
+    let loaded_object = match from_obj(&object_path, 100.0) {
         Ok(o) => o,
         Err(e) => panic!("Failed with error: {:?}", e),
     };
@@ -34,7 +42,7 @@ fn main() {
 
     let mut theta: f32 = 0.0;
 
-    // TODO: Make all calculations depend on deltatime
+    print!("\x1b[2J\x1b[H");
     loop {
         print!("\x1b[H");
         let frame_timer = Instant::now();
@@ -98,11 +106,19 @@ fn main() {
             println!();
         }
 
-        theta += 0.05;
-
-        let frame_time = frame_timer.elapsed().as_millis();
+        // TODO: Cap frame rate to 60 fps, needs to properly work with deltatime calculations
+        let frame_time = match frame_timer.elapsed().as_millis() {
+            0 => 1, // Hardcoded prevention from dividing by 0
+            millis => millis,
+        };
+        
+        theta += 0.0005 * frame_timer.elapsed().as_millis() as f32;
+        
         println!("Calculation Duration: {} ms", frame_time);
         println!("   Frames per Second: {}", 1000 / frame_time);
-        // thread::sleep(Duration::from_millis(10))
+        
+        // if frame_time < 16 {
+        //     thread::sleep(Duration::from_millis(15 - frame_time as u64));
+        // }
     }
 }

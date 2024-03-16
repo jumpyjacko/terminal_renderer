@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "cube"
+name = "terminal_renderer"
 version = "0.1.0"

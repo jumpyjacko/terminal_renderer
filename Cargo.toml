@@ -1,7 +1,8 @@
 [package]
-name = "cube"
+name = "terminal_renderer"
 version = "0.1.0"
 edition = "2021"
+author = ["Jackson Ly (Personal) <bobjacklee27@gmail.com>", "Jackson Ly (Student) <jackson.ly@student.uts.edu.au>"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
