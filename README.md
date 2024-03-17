@@ -9,6 +9,9 @@ A small rust program that is able to render some `.obj` files in your own termin
 ## How to use
 ```./terminal_renderer <path-to-obj-file>```
 
+## How to build
+Use `cargo build --release`.
+
 ## Gallery
 ### Cube
 ![cube](./gallery/cube.gif)
