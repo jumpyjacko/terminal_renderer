@@ -7,7 +7,11 @@ A small rust program that is able to render some `.obj` files in your own termin
 - Object files must be triangulated, this program does not render quads
 
 ## How to use
-`./terminal_renderer`
+```./terminal_renderer <path-to-obj-file>```
 
 ## Gallery
+### Cube
+![cube](./gallery/cube.gif)
 
+### Suzanne
+![suzanne](./gallery/suzanne.gif)
