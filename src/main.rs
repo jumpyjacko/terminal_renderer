@@ -1,9 +1,9 @@
 use crate::math::{calculate_face_normal, Float3, Int2};
 use crate::parser::from_obj;
 use crate::shapes::Face;
-use std::time::{Duration, Instant};
-use std::thread;
 use std::env;
+use std::thread;
+use std::time::{Duration, Instant};
 
 mod math;
 mod parser;
@@ -15,8 +15,10 @@ const FOCAL_LENGTH: i32 = 60;
 
 const OFFSET: usize = SIZE / 2;
 
-fn main() {
+const TARGET_FPS: u128 = 60;
+const TARGET_FRAME_TIME: u128 = 1000 / TARGET_FPS;
 
+fn main() {
     // let vert_table: Vec<Float3> = shapes::CUBE.verts.to_vec();
     // let face_table: Vec<Face> = shapes::CUBE.faces.to_vec();
     let args: Vec<String> = env::args().collect();
@@ -25,7 +27,7 @@ fn main() {
         true => panic!("No path to an .obj file provided"),
         false => args[1].to_owned(),
     };
-    
+
     let loaded_object = match from_obj(&object_path, 100.0) {
         Ok(o) => o,
         Err(e) => panic!("Failed with error: {:?}", e),
@@ -106,19 +108,29 @@ fn main() {
             println!();
         }
 
-        // TODO: Cap frame rate to 60 fps, needs to properly work with deltatime calculations
-        let frame_time = match frame_timer.elapsed().as_millis() {
-            0 => 1, // Hardcoded prevention from dividing by 0
-            millis => millis,
+        let elapsed_frame_time = match frame_timer.elapsed().as_millis() {
+            0 => 1, // NOTE: Hardcoded divide by zero prevention
+            time => time,
         };
-        
-        theta += 0.0005 * frame_timer.elapsed().as_millis() as f32;
-        
-        println!("Calculation Duration: {} ms", frame_time);
-        println!("   Frames per Second: {}", 1000 / frame_time);
-        
-        // if frame_time < 16 {
-        //     thread::sleep(Duration::from_millis(15 - frame_time as u64));
-        // }
+        let frame_time = if elapsed_frame_time < TARGET_FRAME_TIME {
+            TARGET_FRAME_TIME
+        } else {
+            elapsed_frame_time
+        };
+
+        let delta_time: f32 = frame_time.max(TARGET_FRAME_TIME) as f32;
+        theta += 0.0005 * delta_time;
+
+        let remaining_frame_time = if elapsed_frame_time < TARGET_FRAME_TIME {
+            TARGET_FRAME_TIME - elapsed_frame_time
+        } else {
+            0
+        };
+
+        println!("Calculation Duration: {} ms", elapsed_frame_time);
+        println!("Remaining frame time: {} ms", remaining_frame_time);
+        println!("   Frames per Second: {}", 1000 / elapsed_frame_time);
+
+        thread::sleep(Duration::from_millis(remaining_frame_time as u64));
     }
 }
