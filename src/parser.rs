@@ -7,7 +7,7 @@ pub enum ParseError {
     EmptyVector,
 }
 
-/// Creates an 'Object' type from a '.obj' file
+/// Creates an 'Object' struct from a '.obj' file
 pub fn from_obj(path: &str, scale: f32) -> Result<Object, ParseError> {
     let file: String = read_file(path)?;
 
@@ -25,7 +25,7 @@ pub fn from_obj(path: &str, scale: f32) -> Result<Object, ParseError> {
             words.remove(0);
             let words = words
                 .into_iter()
-                .map(|e| e.parse::<f32>().expect("Failed to parse vertice to float") * scale)
+                .map(|e| e.parse::<f32>().expect("Failed to parse vertex to float") * scale)
                 .collect();
 
             verts.push(match Float3::from_vec(words) {
@@ -36,7 +36,7 @@ pub fn from_obj(path: &str, scale: f32) -> Result<Object, ParseError> {
             words.remove(0);
             let words: Vec<usize> = words
                 .into_iter()
-                .map(|e| e.split("/").next().expect("??? I don't even know"))
+                .map(|e| e.split("/").next().expect("Couldn't split face string"))
                 .map(|e| e.parse::<usize>().expect("Failed to parse face to usize") - 1)
                 .collect();
 

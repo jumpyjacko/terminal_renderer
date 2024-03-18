@@ -19,8 +19,6 @@ const TARGET_FPS: u128 = 60;
 const TARGET_FRAME_TIME: u128 = 1000 / TARGET_FPS;
 
 fn main() {
-    // let vert_table: Vec<Float3> = shapes::CUBE.verts.to_vec();
-    // let face_table: Vec<Face> = shapes::CUBE.faces.to_vec();
     let args: Vec<String> = env::args().collect();
 
     let object_path = match args[1].len() < 2 {
@@ -103,7 +101,8 @@ fn main() {
 
         for row in canvas.iter_mut() {
             for cell in row.iter_mut() {
-                print!("{}{0}", TILES[*cell]);
+                print!("{}{0}", TILES[*cell]); // NOTE: Shaded Render
+                // print!("{}{0}", *cell);     // NOTE: DEBUG: Show normal values
             }
             println!();
         }
